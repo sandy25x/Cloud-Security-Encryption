@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Login</title>
+    <style>
+        /* login.html */
+        body {
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          margin: 0;
+          padding: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 100vh;
+          background-image: linear-gradient(to right, #2C3E50, #4CA1AF); /* fallback for old browsers */
+          position: relative; /* Added relative positioning */
+        }
+    
+        /* Heading style for CLOUDSHIELD */
+        h1 {
+          margin: 20px; /* Adjusted margin for better spacing */
+          font-size: 2em; /* Larger font size for emphasis */
+          padding: 10px;
+          border-radius: 8px;
+          position: absolute;
+          top: -22px; /* Adjusted top position */
+          left: 10px; /* Aligned to the left */
+        }
+    
+        /* CLOUD text style for emphasis */
+        .cloud {cursor: pointer;
+          color: #2196f3; /* Light blue color for CLOUD */
+        }
+    
+        /* SHIELD text style for emphasis */
+        .shield {cursor: pointer;
+          color: #000; /* Black color for SHIELD */
+        }
+    
+        /* Container for user login */
+        .login-container {
+          background-color: rgba(255, 255, 255, 0.20); /* Semi-transparent white background */
+          padding: 40px;
+          border-radius: 12px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Soft shadow */
+          width: 320px;
+          text-align: center;
+          position: relative; /* Relative positioning for absolute elements */
+        }
+    
+        label {
+          display: block;
+          margin-bottom: 12px;
+          color: white; /* Mystical blue color */
+        }
+    
+        input {
+          width: 100%;
+          padding: 12px;
+          margin-bottom: 24px;
+          background-color: rgba(255, 255, 255, 0.20);
+          box-sizing: border-box;
+          border: 1px solid white; /* Mystical blue border */
+          border-radius: 25px;
+          font-size: 1em; /* Normal font size */
+        }
+    
+        button {
+            background-color: #2196F3;
+            color: white;; /* White text */
+          padding: 12px;
+          border: 1px solid white;
+          border-radius: 25px;
+          cursor: pointer;
+          width: 100%;
+          font-size: 1.1em; /* Slightly larger font size */
+          transition: background-color 0.3s ease, color 0.3s ease;
+        }
+    
+        button:hover {
+          background-color: #1976D2; /* Darker blue button on hover */
+        }
+    
+        /* Style for the Admin Login link button */
+        .admin-login {
+          position: absolute;
+          top: 20px; /* Adjust top position for better spacing */
+          right: 20px;
+          padding: 8px 16px;
+          border: 2px solid white; /* Mystical blue border */
+          border-radius: 6px;
+          font-size: 1em;
+          text-decoration: none;
+          color: white; /* Mystical blue text */
+          font-weight: bold; /* Bold font weight for emphasis */
+          transition: background-color 0.8s ease, color 0.8s ease;
+        }
+    
+        .admin-login:hover {
+          background-color: white; /* Mystical blue on hover */
+          color: Black; /* White text on hover */
+          border:2px solid Black; /*
+        }
+
+/* Error message style */
+.error-message {
+    width: 80%;
+    margin: 20px auto;
+    padding: 12px;
+    border: 2px solid #ff7043; /* Coral border */
+    background-color: #ffccbc; /* Light coral background */
+    color: #3f51b5; /* Mystical blue text */
+    border-radius: 8px;
+    text-align: center;
+    font-size: 1.1em; /* Slightly larger font size */
+}
+    </style>
+</head>
+<body>
+    <!-- Admin Login link button in the top right corner -->
+    <a href="{{ url_for('admin_login') }}" class="admin-login">ADMIN LOGIN</a>
+    <!-- Heading for CLOUDSHIELD -->
+    <h1><span class="cloud">CLOUD</span><span class="shield">SHIELD</span></h1>
+    <!-- Container for user login -->
+    <div class="login-container">
+        <h2 style="color: #000000;">USER LOGIN</h2>
+        {% if error_message %}
+            <div class="error-message">{{ error_message }}</div>
+            {% if error_message == 'Invalid username or password. Please try again.' %}
+                <!-- Add your script here -->
+                <script>
+                    alert('Invalid username or password. Please try again.');
+                </script>
+            {% endif %}
+        {% endif %}
+        <form action="/login" method="post">
+            <label for="username">USERNAME</label>
+            <input type="text" id="username" name="username" required>
+            <br>
+            <label for="password">PASSWORD</label>
+            <input type="password" id="password" name="password" required>
+            <br>
+            <button type="submit">LOGIN</button>
+        </form>
+        <p style="color: #000000;">Don't have an account? <a href="/register" style="color: light blue;">Register here</a></p>
+    </div>
+</body>
+</html>
