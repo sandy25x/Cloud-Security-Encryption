@@ -1,4 +1,4 @@
-INTRODUCTION
+#INTRODUCTION
 
 The proposed concept introduces an advanced, cloud-based security framework 
 meticulously designed for web applications, representing a significant evolution in the 
@@ -150,7 +150,7 @@ if __name__ == '__main__':
 - The script outputs the encrypted and decrypted files in the user's Downloads directory.
 
 
-Cloud Security Framework  
+#Cloud Security Framework  
 
 This code defines a Flask web application that manages user registration, authentication, file uploads, and encryption. Below is a summary of the main functionalities and components of the application:
 
