@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Details</title>
+    <style>
+body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  /* Changed height to min-height */
+  background-image: linear-gradient(to right, #2C3E50, #4CA1AF); /* fallback for old browsers */
+    flex-direction: column;
+    text-align: center;
+    position: relative;
+    overflow-y: auto; /* Enable vertical scrolling */
+}
+
+h1 {
+    margin: 20px; /* Adjusted margin for better spacing */
+    font-size: 2em; /* Larger font size for emphasis */
+    padding: 10px;
+    border-radius: 8px;
+    position: absolute;
+    top: -22px; /* Adjusted top position */
+    left: 10px; /* Aligned to the left */
+}
+
+/* CLOUD text style */
+.cloud {cursor: pointer;
+    color: #2196f3; /* Light blue color for CLOUD */
+     /* Black text shadow */
+}
+
+/* SHIELD text style */
+.shield {cursor: pointer;
+    color: #000; /* Black color for SHIELD */
+     /* Light blue text shadow */
+}
+
+h2 {
+    color: White;
+    margin-top: 10%;
+    font-weight: bold;
+}
+
+p {
+    margin-top: 10px; /* Adjusted margin-top */
+}
+
+        /* Logout button style */
+        .logout-button {
+            position: absolute;
+            top: 20px; /* Adjust top position for better spacing */
+            right: 20px;
+            padding: 8px 16px;
+            border: 2px solid white; /* Mystical blue border */
+            border-radius: 25px;
+            font-size: 1em;
+            text-decoration: none;
+            color: white; /* Mystical blue text */
+            font-weight: bold; /* Bold font weight for emphasis */
+            transition: background-color 0.8s ease, color 0.8s ease;
+        }
+
+        .logout-button:hover {
+            background-color: white; /* Mystical blue on hover */
+            color: Black; /* White text on hover */
+        }
+
+        /* Container for user information and table */
+        .container {
+            text-align: center; /* Align content in the center */
+            width: 80%; /* Set width to 80% */
+        }
+
+        /* User information style */
+
+        /* Table style */
+        table {
+            border-collapse: collapse;
+            width: 100%; /* Set table width to 100% */
+            margin-top: 20px; /* Adjusted margin-top value */
+        }
+
+        th, td {
+            border: 2px solid #ddd;
+            padding: 20px;
+            color: white;
+            text-align: left;
+        }
+
+        th {
+            background-color: rgba(255, 255, 255, 0.20);
+            color: #fff;
+        }
+
+        /* Button style for viewing user activity */
+        .view-activity-button {
+            background-color: #ffa600;
+            color: #fff;
+            padding: 6px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer; /* Add margin to separate buttons */
+        }
+
+        .view-activity-button:hover {
+            background-color: #ff9d00;
+        }
+
+        /* Button style for deleting user */
+        .delete-button {
+            background-color: #ff4d4d;
+            color: #fff;
+            padding: 8px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .delete-button:hover {
+            background-color: #ff3333;
+        }
+    </style>
+</head>
+<body>
+    <h1 onclick="redirectToLogin()">
+        <span class="cloud">CLOUD</span><span class="shield">SHIELD</span>
+    </h1>
+    <a href="{{ url_for('login') }}" class="logout-button">LOGOUT</a>
+    <div class="container">
+        <h2>USER INFORMATION</h2>
+        <table border="1">
+            <tr>
+                <th>Username</th>
+                <th>Password</th>
+                <th>Last Login</th>
+                <th>Is Active</th>
+                <th>Action</th> <!-- Add a new column for the action button -->
+            </tr>
+            {% for user in user_info %}
+                <tr>
+                    <td>{{ user[0] }}</td>
+                    <td>{{ user[1] }}</td>
+                    <td>{{ user[2] }}</td>
+                    <td>{{ user[3] }}</td>
+                    <td>
+                        <!-- Add a button/link to view user activity -->
+                        <a href="{{ url_for('view_user_activity', username=user[0]) }}" class="view-activity-button">Activity</a>
+                        <br><br>   
+                        <!-- Add a form with a button to delete the user -->
+                        <form method="post" action="{{ url_for('delete_user', username=user[0]) }}" style="display: inline;">
+                            <button type="submit" class="delete-button">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+<script>
+    function redirectToLogin() {
+        window.location.href = "/login"; // Replace "/login" with the actual path to your login page
+    }
+</script>
+</html>
