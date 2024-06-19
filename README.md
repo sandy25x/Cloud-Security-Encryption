@@ -28,176 +28,126 @@ robustness of the system and instilling confidence in its reliability and effect
 Moreover, the framework places a strong emphasis on regulatory compliance, recognizing the importance of adhering to data protection regulations and standards.
 
 
-Image Encryption and Decryption Tool
+# RSA-AES Image Encryption Script
 
-  -This Python script provides a GUI-based application to encrypt and decrypt image files using a combination of RSA and AES cryptography. The script leverages the cryptography library for encryption tasks and tkinter for the file selection GUI.
-  
-  Features:
-  AES Key Generation
-  
-  -Generates a random 256-bit AES key for encrypting image data.
-  
-  Image Selection
-  
-  -Uses tkinter to open a file dialog for selecting an image file.
-  
-  RSA Key Generation
-  
-  -Generates a 2048-bit RSA key pair for encrypting the AES key.
-  
-  Encryption
-  
-  -Encrypts the selected image using AES in CTR mode.
-  -Encrypts the AES key using the RSA public key.
-  -Saves the encrypted image and the encrypted AES key to files.
-  
-  Decryption
-  
-  -Decrypts the AES key using the RSA private key.
-  -Decrypts the encrypted image using the decrypted AES key.
-  -Saves the decrypted image to a file.
-  
-  Detailed Breakdown
-  
-  Functions:
-  
-  -generate_aes_key(): Generates a 256-bit AES key.
-  -select_image(): Opens a file dialog to select an image file.
-  -encrypt_aes_key(aes_key, rsa_public_key): Encrypts the AES key using the RSA public key and returns the base64-encoded result.
-  -encrypt_with_aes_ctr(image_path, aes_key): Encrypts the image using AES in CTR mode and saves the encrypted image.
-  -decrypt_with_aes_ctr(encrypted_data, aes_key, file_extension): Decrypts data using AES in CTR mode.
-  -decrypt_image(image_path, aes_key): Decrypts an encrypted image file.
-  -encrypt_image(image_path, rsa_public_key): Coordinates the encryption of the image and AES key.
-  
-  Main Workflow:
-  
-  -The user selects an image file via a file dialog.
-  -The script generates an RSA key pair.
-  -The selected image is encrypted with an AES key, which is then encrypted with the RSA public key.
-  -The encrypted image and AES key are saved to files.
-  -The AES key is decrypted using the RSA private key.
-  -The image is decrypted using the decrypted AES key and saved to a file.
-  
-  Usage
-  
-  -To use this script, run it in a Python environment. The Tkinter GUI will prompt you to select an image file. The script will handle encryption and decryption, saving the resulting files in the working directory.
-  
-  Dependencies
-  
-  -tkinter: For the file selection GUI.
-  -cryptography: For cryptographic operations (install with pip install cryptography).
-  -Pillow: For image handling (install with pip install pillow).
+This script encrypts and decrypts image files using RSA and AES encryption. AES is used for encrypting the image data, while RSA encrypts the AES key. It utilizes the Tkinter library for file selection.
+
+## Features
+
+- **AES-256 Encryption**: Utilizes AES encryption in Counter (CTR) mode for image data encryption.
+- **RSA Encryption**: Encrypts the AES key using RSA public key encryption.
+- **GUI File Selection**: Uses Tkinter to provide a file dialog for selecting images.
+- **File Handling**: Handles reading from and writing encrypted/decrypted data to files.
+
+## Dependencies
+
+- `cryptography`: Library for cryptographic recipes and primitives.
+- `tkinter`: For GUI-based file selection.
+- `Pillow (PIL)`: To handle image files.
+- `os`, `sys`, `logging`, `base64`: Standard Python libraries for various utilities.
+
+## Functions
+
+- **generate_aes_key**: Generates a random 256-bit AES key.
+- **select_image**: Opens a file dialog to select an image file.
+- **encrypt_aes_key**: Encrypts the AES key using an RSA public key.
+- **encrypt_with_aes_ctr**: Encrypts image data using AES in CTR mode.
+- **decrypt_with_aes_ctr**: Decrypts data encrypted with AES in CTR mode.
+- **decrypt_image**: Decrypts the encrypted image file.
+- **encrypt_image**: Encrypts the image file and saves the encrypted AES key.
+
+## Usage
+
+To use the script, run the `main` function which will guide you through selecting an image, encrypting it, and then decrypting it.
 
 
-PDF Encryption and Decryption Tool
+## Notes
 
-  -This script provides a simple GUI-based tool for encrypting and decrypting PDF files using RSA and AES encryption. Here's a summary of its functionality:
-  
-  Features:
-  
-  RSA Key Pair Generation
-  
-  -Generates a 2048-bit RSA key pair (private and public keys).
-  -Saves the keys to files (private.pem and public.pem).
-  
-  File Encryption
-  
-  -Uses the public RSA key to encrypt a randomly generated AES session key.
-  -Encrypts a selected PDF file using the AES session key.
-  -Saves the encrypted session key, nonce, tag, and ciphertext to an output file (encrypted_document.bin).
-  
-  File Decryption
-  
-  -Uses the private RSA key to decrypt the AES session key.
-  -Decrypts the encrypted file using the AES session key.
-  -Saves the decrypted content to an output PDF file (decrypted_document.pdf).
-  
-  File Selection GUI
-  
-  -Uses Tkinter to provide a file selection dialog for choosing the PDF file to encrypt.
-  
-  Detailed Breakdown
-  
-  Functions:
-  
-  -'generate_rsa_key_pair()': Generates and returns an RSA key pair.
-  -'save_key_to_file(key, filename)': Saves a given key to a file.
-  -load_key_from_file(filename): Loads a key from a file.
-  -encrypt_file_rsa(input_file, output_file, public_key_file): Encrypts a file using RSA and AES.
-  -decrypt_file_rsa(input_file, output_file, private_key_file): Decrypts a file using RSA and AES.
-  -choose_file(initialdir=None): Opens a file dialog to select a PDF file.
-  
-  Main Workflow:
-  
-  -The user selects a PDF file through a file dialog.
-  -An RSA key pair is generated and saved to files.
-  -The selected PDF file is encrypted and saved as encrypted_document.bin.
-  -The encrypted file is then decrypted and saved as decrypted_document.pdf.
-  
-  Usage
-  -To use this script, run it in a Python environment. The Tkinter GUI will prompt you to select a PDF file, and the script will handle encryption and decryption, saving the resulting files in the working directory.
-  
-  Dependencies
-  
-  -tkinter: For the file selection GUI.
-  -pycryptodome: For cryptographic operations (install with pip install pycryptodome).
+- Ensure the required libraries are installed using `pip install cryptography tkinter Pillow`.
+- The script outputs the encrypted image and AES key in the current directory.
 
 
-Text File Encryption and Decryption Tool
+# PDF Encryption and Decryption Script Using RSA and AES
 
-  -This Python script provides a tool for encrypting and decrypting text files using a combination of RSA and AES cryptography. It utilizes the cryptography library for cryptographic operations and supports concurrent processing to handle large files efficiently.
-  
-  Features:
-  
-  AES Key Generation
-  
-  -Generates a 256-bit AES key for encrypting file data.
-  
-  RSA Key Generation
-  
-  -Generates a 2048-bit RSA key pair for encrypting the AES key.
-  
-  File Encryption
-  
-  -Splits the input text file into chunks.
-  -Encrypts each chunk using AES in CTR mode concurrently.
-  -Encrypts the AES key using the RSA public key.
-  -Combines encrypted chunks and prints the encrypted data.
-  
-  File Decryption
-  
-  -Decrypts the AES key using the RSA private key.
-  -Decrypts the combined encrypted data using the decrypted AES key.
-  
-  Detailed Breakdown
-  
-  Functions:
-  
-  -generate_aes_key(): Generates a 256-bit AES key.
-  -encrypt_aes_key(aes_key, rsa_public_key): Encrypts the AES key using the RSA public key and returns the base64-encoded result.
-  -encrypt_with_aes_ctr(data, aes_key): Encrypts data using AES in CTR mode.
-  -decrypt_with_aes_ctr(encrypted_data, aes_key): Decrypts data using AES in CTR mode.
-  -encrypt_chunk(chunk, aes_key): Encrypts a chunk of data using AES in CTR mode.
-  -encrypt_text_file(text_file_path, aes_key, rsa_public_key, chunk_size=65536): Encrypts a text file by splitting it into chunks, encrypting each chunk, and encrypting the AES key.
-  
-  Main Workflow:
-  
-  -The script checks if the specified text file exists.
-  -Generates an RSA key pair.
-  -Generates an AES key.
-  -Encrypts the text file using AES and the AES key using RSA.
-  -Saves the encrypted data and encrypted AES key to files.
-  -Decrypts the AES key and the encrypted text file.
-  -Saves the decrypted data to a file.
-  
-  Usage
-  
-  -To use this script, run it in a Python environment, specifying the path to the text file you want to encrypt. The script will handle encryption and decryption, saving the resulting files in the Downloads directory.
-  
-  Dependencies
-  
-  -cryptography: For cryptographic operations (install with pip install cryptography).
-  -concurrent.futures: For concurrent processing.
+This script provides functionality to encrypt and decrypt PDF files using a combination of RSA and AES encryption. It uses the Tkinter library to provide a file dialog for selecting the PDF file.
+
+## Features
+
+- **RSA Key Pair Generation**: Generates RSA public and private keys.
+- **File Encryption**: Encrypts PDF files using RSA and AES.
+- **File Decryption**: Decrypts the encrypted PDF files.
+- **GUI File Selection**: Uses Tkinter to select the PDF file.
+
+## Dependencies
+
+- `pycryptodome`: Library for cryptographic operations.
+- `tkinter`: For GUI-based file selection.
+- `os`: Standard Python library for various utilities.
+
+## Functions
+
+- **generate_rsa_key_pair**: Generates a 2048-bit RSA key pair.
+- **save_key_to_file**: Saves a key to a specified file.
+- **load_key_from_file**: Loads a key from a specified file.
+- **encrypt_file_rsa**: Encrypts a file using RSA and AES.
+- **decrypt_file_rsa**: Decrypts an encrypted file using RSA and AES.
+- **choose_file**: Opens a file dialog to select a PDF file.
+- **main**: Main function to orchestrate encryption and decryption process.
+
+## Usage
+
+To use the script, run the `main` function which will guide you through selecting a PDF file, encrypting it, and then decrypting it.
+
+
+## Notes
+
+- Ensure the required libraries are installed using `pip install pycryptodome tkinter`.
+- The script outputs the encrypted file and keys in the current directory.
+- The decrypted file will be saved with the suffix `_decrypted` in the current directory.
+
+
+## RSA-AES Text Encryption Script
+
+This script provides a solution for encrypting and decrypting text files using RSA and AES encryption. The AES key is used for encrypting the data, while the RSA public key encrypts the AES key itself.
+
+### Features
+
+- **AES-256 Encryption**: Uses AES encryption in Counter (CTR) mode for data encryption.
+- **RSA Encryption**: Encrypts the AES key using RSA public key encryption.
+- **Concurrent Processing**: Encrypts text file data in chunks concurrently to speed up the process.
+- **File Handling**: Reads from and writes encrypted/decrypted data to files.
+
+### Dependencies
+
+- `cryptography`: Python library for cryptographic recipes and primitives.
+- `concurrent.futures`: To handle concurrent execution of file chunk encryption.
+- `os`, `sys`, `logging`, `base64`: Standard Python libraries for various utility functions.
+
+### Functions
+
+- **generate_aes_key**: Generates a random 256-bit AES key.
+- **encrypt_aes_key**: Encrypts the AES key using an RSA public key.
+- **encrypt_with_aes_ctr**: Encrypts data using AES in CTR mode.
+- **decrypt_with_aes_ctr**: Decrypts data encrypted with AES in CTR mode.
+- **encrypt_chunk**: Encrypts a data chunk with AES.
+- **encrypt_text_file**: Encrypts a text file in chunks and returns encrypted data and the encrypted AES key.
+- **main**: Main function to handle file processing, RSA key generation, and calling encryption/decryption functions.
+
+### Usage
+
+To use the script, call the `main` function with the path of the text file you want to encrypt:
+
+```python
+if __name__ == '__main__':
+    file_path = 'path/to/your/textfile.txt'
+    main(file_path)
+```
+
+### Notes
+
+- Ensure the `cryptography` library is installed using `pip install cryptography`.
+- Adjust the file paths as needed.
+- The script outputs the encrypted and decrypted files in the user's Downloads directory.
 
 
 Cloud Security Framework  
