@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  /* Changed height to min-height */
+  background-image: linear-gradient(to right, #2C3E50, #4CA1AF); /* fallback for old browsers */
+    flex-direction: column;
+    text-align: center;
+    position: relative;
+    overflow-y: auto; /* Enable vertical scrolling */
+}
+
+h1 {
+    margin: 20px; /* Adjusted margin for better spacing */
+    font-size: 2em; /* Larger font size for emphasis */
+    padding: 10px;
+    border-radius: 8px;
+    position: absolute;
+    top: -22px; /* Adjusted top position */
+    left: 10px; /* Aligned to the left */
+}
+
+
+/* CLOUD text style */
+.cloud {
+    cursor: pointer;
+    color: #2196f3; /* Light blue color for CLOUD */
+     /* Black text shadow */
+}
+
+/* SHIELD text style */
+.shield {
+    cursor: pointer;
+    color: #000; /* Black color for SHIELD */
+     /* Light blue text shadow */
+}
+h2 {
+    color: White; 
+    font-weight: bold;
+    margin-top: 10%;
+}
+
+
+p {
+    margin-top: 10px; /* Adjusted margin-top */
+    color: White; 
+    font-weight: bold;
+}
+
+        .upload-button {
+            background-color: grey;
+            color: white; /* White text */
+            padding: 12px;
+            border: 2px solid white; /* Mystical blue border */
+            border-radius: 6px;
+            cursor: pointer;
+            width: 30%;
+            font-size: 1.1em; /* Slightly larger font size */
+            font-weight: bold;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .upload-button:hover {
+            background-color: White; /* Mystical blue on hover */
+            color: Black; /* White text on hover */
+        }
+
+        .logout-button {
+    position: absolute;
+    top: 20px; /* Adjust top position for better spacing */
+    right: 20px;
+    padding: 8px 16px;
+    border: 2px solid White; /* Mystical blue border */
+    border-radius: 6px;
+    font-size: 1em;
+    text-decoration: none;
+    color: White; /* Mystical blue text */
+    font-weight: bold; /* Bold font weight for emphasis */
+    transition: background-color 0.3s ease, color 0.3s ease;
+
+}
+
+.logout-button:hover {
+    background-color: White; /* Mystical blue on hover */
+    color: Black; /* White text on hover */
+}
+        .delete-account-btn {
+            position: absolute;
+            top: 20px;
+            right: 120px;
+            background-color: #f2dede; /* Light red color */
+            border: 2px solid #b53f3f;
+            color: #a94442; /* Darker red text color */
+            padding: 10px 20px;
+            border-radius: 6px;
+    font-size: 1em;
+            cursor: pointer;
+            border-color: #b53f3f;
+        }
+        .delete-account-btn:hover{
+            background-color: #e16c5c; /* Mystical blue on hover */
+             color: #fff; 
+        }
+    </style>
+</head>
+<body>
+    <h1 onclick="redirectToLogin()">
+        <span class="cloud">CLOUD</span><span class="shield">SHIELD</span>
+    </h1>
+    <h2>Welcome to Your Dashboard, {{ username }}!</h2>
+    <p>This is your personalized space.</p>
+    <br>
+    <form action="{{ url_for('delete_account') }}" method="post">
+        <input type="submit" value="Delete Account" class="delete-account-btn">
+    </form>
+    <a href="{{ url_for('logout') }}" class="logout-button">Logout</a>
+    <!-- New buttons for uploading files -->
+    <button class="upload-button" onclick="dropImage()">Drop Image</button>
+    <br><br>
+    <button class="upload-button" onclick="dropDocuments()">Drop Documents</button>
+    <br><br>
+    <button class="upload-button" onclick="dropTextFile()">Drop Text File</button>
+    <br><br>
+    <button class="upload-button" onclick="viewFiles()">View Files</button>
+    <!-- Display area for uploaded files -->
+    <div id="fileDisplay"></div>
+
+    <script>
+        function dropImage() {
+            var fileInput = document.createElement("input");
+            fileInput.type = "file";
+            fileInput.accept = "image/*";
+            fileInput.onchange = function () {
+                executeImgScrblr(fileInput.files[0]);
+            };
+    
+            // Trigger the file input without displaying the dialog box
+            fileInput.click();
+        }
+    
+        function dropDocuments() {
+            var fileInput = document.createElement("input");
+            fileInput.type = "file";
+            fileInput.accept = "application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+            fileInput.onchange = function () {
+                executeDocScrblr('/upload_document', fileInput.files[0]);
+            };
+
+            // Trigger the file input without displaying the dialog box
+            fileInput.click();
+        }
+
+        function executeDocScrblr(url, file) {
+            if (file) {
+                // Assuming 'file' is the selected file
+                uploadFile('/upload_document', file);
+            }
+        }
+    
+        function executeImgScrblr(imageFile) {
+            if (imageFile) {
+                // Assuming 'imageFile' is the selected file
+                uploadFile('/upload_image', imageFile);
+            }
+        }
+    
+        function uploadFile(url, file) {
+            var formData = new FormData();
+            formData.append('file', file);
+    
+            fetch(url, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data.message);
+                document.getElementById('fileDisplay').innerText = data.message;
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        function viewFiles() {
+            window.location.href = '/viewfiles';
+        }
+
+        function dropTextFile() {
+            var fileInput = document.createElement("input");
+            fileInput.type = "file";
+            fileInput.accept = ".txt"; // Limit file selection to .txt files
+            fileInput.onchange = function () {
+                uploadTextFile(fileInput.files[0]);
+            };
+
+            // Trigger the file input without displaying the dialog box
+            fileInput.click();
+        }
+
+        function uploadTextFile(file) {
+            var formData = new FormData();
+            formData.append('file', file);
+
+            fetch('/upload_text_file', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data.message);
+                // Update the file display area with the message
+                document.getElementById('fileDisplay').innerText = data.message;
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        function redirectToLogin() {
+            window.location.href = "/login"; // Replace "/login" with the actual path to your login page
+        }
+    </script>
+</body>
+</html>
