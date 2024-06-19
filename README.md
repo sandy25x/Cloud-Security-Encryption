@@ -120,8 +120,8 @@ PDF Encryption and Decryption Tool
   
   Functions:
   
-  -generate_rsa_key_pair(): Generates and returns an RSA key pair.
-  -save_key_to_file(key, filename): Saves a given key to a file.
+  -'generate_rsa_key_pair()': Generates and returns an RSA key pair.
+  -'save_key_to_file(key, filename)': Saves a given key to a file.
   -load_key_from_file(filename): Loads a key from a file.
   -encrypt_file_rsa(input_file, output_file, public_key_file): Encrypts a file using RSA and AES.
   -decrypt_file_rsa(input_file, output_file, private_key_file): Decrypts a file using RSA and AES.
