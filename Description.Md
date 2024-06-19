@@ -17,6 +17,7 @@ detailed visibility into system operations, it enables proactive monitoring and 
 potential security threats. Immediate alerts for unauthorized access attempts serve as an 
 early warning system, empowering administrators to take swift and decisive action to 
 mitigate risks and protect sensitive data from compromise. 
+
 The integration of established cloud security best practices further strengthens the 
 framework's resilience, ensuring that it remains in alignment with industry standards and 
 best-in-class security protocols. Regular security audits serve as a proactive measure to 
@@ -45,6 +46,7 @@ resilience, ensuring alignment with industry standards and best-in-class securit
 Regular security audits serve as a proactive measure to identify and address vulnerabilities, 
 enhancing the overall robustness of the system and instilling confidence in its reliability and 
 effectiveness. 
+
  Additionally, the framework places a strong emphasis on regulatory compliance, 
 recognizing the importance of adhering to data protection regulations and standards. By 
 maintaining strict compliance with relevant laws and regulations, it not only mitigates legal 
