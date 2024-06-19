@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-image: linear-gradient(to right, #2C3E50, #4CA1AF); /* fallback for old browsers */
+            position: relative; /* Added relative positioning */
+          }
+
+/* Heading style for CLOUDSHIELD */
+h1 {
+    margin: 20px; /* Adjusted margin for better spacing */
+    font-size: 2em; /* Larger font size for emphasis */
+    padding: 10px;
+    border-radius: 8px;
+    position: absolute;
+    top: -22px; /* Adjusted top position */
+    left: 10px; /* Aligned to the left */
+}
+
+/* CLOUD text style */
+.cloud {cursor: pointer;
+    color: #2196f3; /* Light blue color for CLOUD */
+     /* Black text shadow */
+}
+
+/* SHIELD text style */
+.shield {cursor: pointer;
+    color: #000; /* Black color for SHIELD */
+     /* Light blue text shadow */
+}
+
+        form {
+            background-color: rgba(255, 255, 255, 0.20); /* Transparent white background */
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    width: 320px;
+    text-align: center;
+    position: relative; /* Relative positioning for absolute elements */
+}
+
+label {
+    display: block;
+    margin-bottom: 12px;
+    color: white; /* Mystical blue color */
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 24px;
+    background-color: rgba(255, 255, 255, 0.20);
+    box-sizing: border-box;
+    border: 1px solid white; /* Mystical blue border */
+    border-radius: 25px;
+    font-size: 1em; /* Normal font size */
+  }
+
+button {
+    background-color: #2196F3; /* Blue button */
+    color: #fff; /* White text */
+    padding: 12px;
+    border: 1px solid white;
+    border-radius: 25px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 1.1em; /* Slightly larger font size */
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+button:hover {
+    background-color: #1976D2; /* Darker blue button on hover */
+    color:Black
+}
+    </style>
+</head>
+<body>
+    <h1 onclick="redirectToLogin()">
+        <span class="cloud">CLOUD</span><span class="shield">SHIELD</span>
+    </h1>
+    <form id="adminLoginForm">
+        <h2>ADMIN LOGIN</h2>
+        <label for="adminUsername">USERNAME</label>
+        <input type="text" id="adminUsername" name="adminUsername" required>
+
+        <label for="adminPassword">PASSWORD</label>
+        <input type="password" id="adminPassword" name="adminPassword" required>
+
+        <br><br>
+        <button type="button" onclick="submitAdminLogin()">Login</button>
+    </form>
+    <script>
+        function submitAdminLogin() {
+            const adminUsername = document.getElementById('adminUsername').value;
+            const adminPassword = document.getElementById('adminPassword').value;
+    
+            if (adminUsername === 'admin' && adminPassword === 'admin') {
+                window.location.href = '{{ url_for("view_users") }}';
+            } else {
+                alert('Invalid admin credentials');
+            }
+        }
+
+        function redirectToLogin() {
+            window.location.href = "/login"; // Replace "/login" with the actual path to your login page
+        }
+    </script>
+    
+</body>
+</html>
