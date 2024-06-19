@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Files</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      /* Changed height to min-height */
+      background-image: linear-gradient(to right, #2C3E50, #4CA1AF); /* fallback for old browsers */
+        flex-direction: column;
+        text-align: center;
+        position: relative;
+        overflow-y: auto; /* Enable vertical scrolling */
+    }
+h1 {
+    margin: 20px; /* Adjusted margin for better spacing */
+    font-size: 2em; /* Larger font size for emphasis */
+    padding: 10px;
+    border-radius: 8px;
+    position: absolute;
+    top: -22px; /* Adjusted top position */
+    left: 10px; /* Aligned to the left */
+}
+
+/* CLOUD text style */
+.cloud {cursor: pointer;
+    color: #2196f3; /* Light blue color for CLOUD */
+     /* Black text shadow */
+}
+
+/* SHIELD text style */
+.shield {cursor: pointer;
+    color: #000; /* Black color for SHIELD */
+     /* Light blue text shadow */
+}
+
+h2 {
+    color: White; 
+    font-weight: bold;
+    margin-top: 10%;
+}
+
+
+p {
+    margin-top: 10px; /* Adjusted margin-top */
+    color: White; 
+    font-weight: bold;
+}
+
+.logout-button {
+    position: absolute;
+    top: 20px; /* Adjust top position for better spacing */
+    right: 20px;
+    padding: 8px 16px;
+    border: 2px solid white; /* Mystical blue border */
+    border-radius: 6px;
+    font-size: 1em;
+    text-decoration: none;
+    color: white; /* Mystical blue text */
+    font-weight: bold; /* Bold font weight for emphasis */
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.logout-button:hover {
+    background-color: white; /* Mystical blue on hover */
+    color: Black; /* White text on hover */
+}
+.container {
+    text-align: center; /* Align content in the center */
+    width: 80%; /* Set width to 80% */
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%; /* Set table width to 100% */
+    margin-top: 20px; /* Adjusted margin-top value */
+}
+
+th, td {
+    border: 2px solid #ddd;
+    padding: 20px;
+    color: white;
+    text-align: left;
+}
+
+th {
+    background-color: rgba(255, 255, 255, 0.20);
+    color: #fff;
+}
+
+.add-files-button {
+    position: absolute;
+    top: 20px; 
+    right: 120px;
+    padding: 8px 16px;
+    border: 2px solid white;
+    border-radius: 6px;
+    font-size: 1em;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.add-files-button:hover {
+    background-color: white;
+    color: Black;
+}
+.delete-button {
+    background-color: #ff4d4d;
+    color: #fff;
+    padding: 8px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.delete-button:hover {
+    background-color: #ff3333;
+}
+
+    </style>
+</head>
+<body>
+    <h1 onclick="redirectToLogin()">
+        <span class="cloud">CLOUD</span><span class="shield">SHIELD</span>
+    </h1>
+    <a href="{{ url_for('logout') }}" class="logout-button">Logout</a>
+    <a href="{{ url_for('dashboard') }}" class="add-files-button">Add Files</a>
+    <h2>Welcome to Your File Viewer, {{ username }}!</h2>
+    <p>Here are your uploaded files:</p>
+    <div class="container">
+    <table border="1">
+        <tr>
+            <th>FILE NAME</th>
+            <th>DOWNLOAD</th>
+            <th>DELETE</th> <!-- New column for delete button -->
+        </tr>
+        <tbody id="fileDisplay">
+        </tbody>
+    </table>
+</div>
+    <script>
+        // Function to load uploaded files when the window loads
+        window.onload = function() {
+            var username = "{{ username }}";
+            fetch(`/get_uploaded_files`)
+                .then(response => response.json())
+                .then(data => {
+                    var files = data.files;
+                    var fileListHTML = "";
+                    files.forEach(file => {
+                        // Exclude activity_log.txt from being displayed
+                        if (!file.toLowerCase().includes("activity_log.txt")) {
+                            var fileExtension = file.split('.').pop().toLowerCase();
+                            if (['png', 'jpg', 'jpeg', 'bmp', 'gif', 'pdf', 'doc', 'docx', 'txt'].includes(fileExtension)) {
+                                fileListHTML += `
+                                    <tr>
+                                        <td>${file}</td>
+                                        <td><a href="/download_file?filename=${file}" target="_blank">Download</a></td>
+                                        <td><button class="delete-button" onclick="deleteFile('${file}')">Delete</button></td>
+                                    </tr>
+                                `;
+                            }
+                        }
+                    });
+                    document.getElementById('fileDisplay').innerHTML = fileListHTML;
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        // Function to delete file and row upon confirmation
+        function deleteFile(filename) {
+            var confirmation = confirm(`Are you sure you want to delete ${filename}?`);
+            if (confirmation) {
+                // Remove the row from the table
+                var row = event.target.parentNode.parentNode;
+                row.parentNode.removeChild(row);
+
+                // Call backend to delete the file
+                fetch(`/delete_file/${filename}`, { method: 'DELETE' })
+                    .then(response => response.json())
+                    .then(data => console.log(data))
+                    .catch(error => console.error('Error:', error));
+            }
+        }
+
+        // Function to redirect to login page
+        function redirectToLogin() {
+            window.location.href = "/login"; // Replace "/login" with the actual path to your login page
+        }
+    </script>
+</body>
+</html>
