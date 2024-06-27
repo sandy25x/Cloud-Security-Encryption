@@ -14,10 +14,10 @@ from database import db
 from utils import allowed_file  # Import the allowed_file function
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///C:\\Users\\minij\\Downloads\\try\\instance\\user.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///C:\\Users\\yourpc\\Downloads\\try\\instance\\user.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = 'your_secret_key'
-app.config['UPLOAD_FOLDER'] = 'C:/Users/minij/Downloads/try/path/to/your/upload/folder'
+app.config['UPLOAD_FOLDER'] = 'C:/Users/yourpc/Downloads/try/path/to/your/upload/folder'
 db.init_app(app)
 
 
@@ -76,7 +76,7 @@ def admin_login():
     return render_template('admin_login.html')
 
 def is_username_existing(username):
-    log_file_path = 'C:/Users/minij/Downloads/try/path/to/your/upload/folder/username_log.txt'
+    log_file_path = 'C:/Users./yourpc/Downloads/try/path/to/your/upload/folder/username_log.txt'
     with open(log_file_path, 'r') as log_file:
         existing_usernames = log_file.readlines()
         existing_usernames = [name.strip() for name in existing_usernames]
@@ -184,7 +184,7 @@ MAX_LOGIN_ATTEMPTS = 3  # Define the maximum number of login attempts
 
 
 def log_username(username):
-    log_file_path = 'C:/Users/minij/Downloads/try/path/to/your/upload/folder/username_log.txt'
+    log_file_path = 'C:/Users/yourpc/Downloads/try/path/to/your/upload/folder/username_log.txt'
     with open(log_file_path, 'a') as log_file:
         log_file.write(username + '\n')
 
@@ -192,7 +192,7 @@ def log_username(username):
 def download_file():
     filename = request.args.get('filename')
     username = session.get('username')  # Assuming the username is stored in the session
-    file_path = f'C:/Users/minij/Downloads/try/path/to/your/upload/folder/{username}/{filename}'
+    file_path = f'C:/Users/yourpc/Downloads/try/path/to/your/upload/folder/{username}/{filename}'
     record_download(username, filename)
     return send_file(file_path, as_attachment=True)
 
