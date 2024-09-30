@@ -225,6 +225,11 @@ This code defines a Flask web application that manages user registration, authen
    - Logs all significant user actions with timestamps.
    - Displays activity logs to admins.
 
+##Output Screenshots
+
+https://drive.google.com/drive/folders/18O2cfmUtnVZpNIEZpmCPZSa2Gs1RN0Zf?usp=sharing
+
+
 ### Security Measures
 - Password hashing and validation.
 - Session management for user authentication.
